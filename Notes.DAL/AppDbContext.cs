@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Notes.Domain.Entity;
 
 namespace Notes.DAL
@@ -8,9 +9,10 @@ namespace Notes.DAL
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
             Database.EnsureCreated();
+            
         }
 
         public DbSet<Note> Notes { get; set; }
-
+        
     }
 }

@@ -40,11 +40,11 @@ namespace Notes.DAL.Repository
             return await _context.Notes.FirstOrDefaultAsync(x => x.Name == name);
         }
 
-        public async Task<Note> Update(Note entity)
+        public async Task<bool> Update(Note entity)
         {
             _context.Notes.Update(entity);
             await _context.SaveChangesAsync();
-            return entity;
+            return true;
         }
 
     }

@@ -4,7 +4,7 @@
     {
         public Task Create(T entity);
         public Task<List<T>> Get();
-        public Task<T> Update(T entity);
+        public Task<bool> Update(T entity);
         public Task<bool> Delete(T entity);
     }
 }

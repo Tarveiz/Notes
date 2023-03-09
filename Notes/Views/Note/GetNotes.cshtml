@@ -1,9 +1,4 @@
-﻿@using Notes.Domain.Entity;
-@using Notes.Domain.Response;
-
-@*@model IEnumerable<Notes.Domain.Entity.Note>*@
-@*@model IEnumerable<Notes.Domain.Response.BaseResponse<Note>>*@
-@model IEnumerable<Notes.Domain.Entity.Note>
+﻿@model List<Notes.Domain.Entity.Note>
 
 @{
     ViewBag.Title = "NoteCollections";
@@ -16,5 +11,4 @@
     <p>@note.Name</p>
     <p>@note.Description</p>
     <p>@note.Date</p>
-    
 }
