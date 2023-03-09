@@ -14,6 +14,32 @@ namespace Notes.Services.Implementation
         {
             _noteRepository = repository;
         }
+
+        public async Task<IBaseResponse<Note>> GetNote(int id)
+        {
+            var baseResponse = new BaseResponse<Note>();
+            try
+            {
+                var note = await _noteRepository.GetById(id);
+                if (note == null)
+                {
+                    baseResponse.Description = "Такая запись не найдена";
+                    baseResponse.StatusCode = StatusCode.NotesNotFound;
+                    return baseResponse;
+                }
+                baseResponse.Data = note;
+                return baseResponse;
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<Note>()
+                {
+                    Description = $"{this.GetType()} : {ex.Message}"
+                };
+            }
+        }
+        
+         
         public async Task<IBaseResponse<IEnumerable<Note>>> GetNotes()
         {
             var baseResponse = new BaseResponse<IEnumerable<Note>>();
@@ -23,7 +49,7 @@ namespace Notes.Services.Implementation
                 if(notes.Count == 0)
                 {
                     baseResponse.Description = "Не найдено ни одного элемента";
-                    baseResponse.StatusCode = StatusCode.Success;
+                    baseResponse.StatusCode = StatusCode.NotesNotFound;
                     return baseResponse;
                 }
                 baseResponse.Data = notes;

@@ -18,10 +18,11 @@ namespace Notes.DAL.Repository
 
         }
 
-        public async Task Delete(Note entity)
+        public async Task<bool> Delete(Note entity)
         {
             _context.Notes.Remove(entity);
             await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<List<Note>> Get()

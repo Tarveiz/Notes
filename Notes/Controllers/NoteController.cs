@@ -18,12 +18,17 @@ namespace Notes.Controllers
         public async Task<IActionResult> GetNotes()
         {
             var response = await _noteService.GetNotes();
-            return View(response);
+            
+            return View(response.Data);
+            //Notes.Domain.Response.BaseResponse<System.Collections.Generic.IEnumerable<Notes.Domain.Entity.Note>>}
         }
         public IActionResult Index()
         {
             return View();
         }
+        // Domain.Interface.IBaseRepository<IEnumerable<Domain.Entity.Note>>
+        //	Notes.dll!Notes.Controllers.NoteController.GetNotes() Строка 21	C#
+
 
     }
 }
