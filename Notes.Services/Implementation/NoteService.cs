@@ -5,113 +5,145 @@ using Notes.Services.Interface;
 using Notes.Domain.Enum;
 using Notes.Domain.Interface;
 using Notes.Domain.ViewModel.Note;
+using Microsoft.EntityFrameworkCore;
+using Notes.Domain.Entity;
 
 namespace Notes.Services.Implementation
 {
     public class NoteService : INoteService
     {
-        private readonly INoteRepository _noteRepository;
-        public NoteService(INoteRepository repository)
+        private readonly IBaseRepository<Note> _noteRepository;
+        public NoteService(IBaseRepository<Note> repository)
         {
             _noteRepository = repository;
         }
-        public async Task<IBaseResponse<Note>> GetNote(int id)
+        public async Task<IBaseResponse<NoteViewModel>> GetNote(int id)
         {
-            var baseResponse = new BaseResponse<Note>();
             try
             {
-                var note = await _noteRepository.GetById(id);
+                var note = await _noteRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
                 if (note == null)
                 {
-                    baseResponse.Description = "Такая запись не найдена";
-                    baseResponse.StatusCode = StatusCode.NotesNotFound;
-                    return baseResponse;
+                    return new BaseResponse<NoteViewModel>()
+                    {
+                        Description = "Запись не найдена",
+                        StatusCode = StatusCode.NotesNotFound
+                    };
                 }
-                baseResponse.Data = note;
-                return baseResponse;
-            }
-            catch (Exception ex)
-            {
-                return new BaseResponse<Note>()
+                var data = new NoteViewModel()
                 {
-                    Description = $"{this.GetType()} : {ex.Message}"
+                    Name = note.Name,
+                    Description = note.Description,
+                    Date = note.Date,
+                    //Image = note.Image
+                };
+                return new BaseResponse<NoteViewModel> {
+                    StatusCode = StatusCode.Success,
+                    Data = data
                 };
             }
-        }
-        public async Task<IBaseResponse<Note>> GetNote(string name)
-        {
-            var baseResponse = new BaseResponse<Note>();
-            try
-            {
-                var note = await _noteRepository.GetByName(name);
-                if (note == null)
-                {
-                    baseResponse.Description = "Такая запись не найдена";
-                    baseResponse.StatusCode = StatusCode.NotesNotFound;
-                    return baseResponse;
-                }
-                baseResponse.Data = note;
-                return baseResponse;
-            }
             catch (Exception ex)
             {
-                return new BaseResponse<Note>()
-                {
-                    Description = $"{this.GetType()} : {ex.Message}"
-                };
-            }
-        }
-        public async Task<IBaseResponse<IEnumerable<Note>>> GetNotes()
-        {
-            var baseResponse = new BaseResponse<IEnumerable<Note>>();
-            try
-            {
-                var notes = await _noteRepository.Get();
-                if(notes.Count == 0)
-                {
-                    baseResponse.Description = "Не найдено ни одного элемента";
-                    baseResponse.StatusCode = StatusCode.NotesNotFound;
-                    return baseResponse;
-                }
-                baseResponse.Data = notes;
-                baseResponse.StatusCode = StatusCode.Success;
-                return baseResponse;
-
-            }
-            catch (Exception ex)
-            {
-                return new BaseResponse<IEnumerable<Note>>()
+                return new BaseResponse<NoteViewModel>()
                 {
                     Description = $"{this.GetType()} : {ex.Message}",
                     StatusCode = StatusCode.InternalServerError
                 };
             }
         }
-        public async Task<IBaseResponse<bool>> UpdateNote(int id, NoteViewModel model)
+        public async Task<IBaseResponse<NoteViewModel>> GetNote(string name)
         {
-            var baseResponse = new BaseResponse<bool>();
             try
             {
-                var note = await _noteRepository.GetById(id);
-                if(note == null)
+                var note = await _noteRepository.GetAll().FirstOrDefaultAsync(x => x.Name == name);
+                if (note == null)
                 {
-                    baseResponse.Data = false;
-                    baseResponse.Description = "Такой заметки не найдено";
-                    baseResponse.StatusCode = StatusCode.NotesNotFound;
-                    return baseResponse;
+                    return new BaseResponse<NoteViewModel>()
+                    {
+                        Description = "Запись не найдена",
+                        StatusCode = StatusCode.NotesNotFound
+                    };
                 }
+                var data = new NoteViewModel()
+                {
+                    Name = note.Name,
+                    Description = note.Description,
+                    Date = note.Date,
+                    //Image = note.Image
 
-                note.Name = model.Name;
-                note.Description = model.Description;
-                note.Date = DateTime.Now;
-
-                baseResponse.Data = await _noteRepository.Update(note);
-                baseResponse.StatusCode= StatusCode.Success;
-                return baseResponse;
+                };
+                return new BaseResponse<NoteViewModel>
+                {
+                    StatusCode = StatusCode.Success,
+                    Data = data
+                };
             }
             catch (Exception ex)
             {
-                return new BaseResponse<bool>()
+                return new BaseResponse<NoteViewModel>()
+                {
+                    Description = $"{this.GetType()} : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
+        public  IBaseResponse<List<Note>> GetNotes()
+        {
+            try
+            {
+                var notes =  _noteRepository.GetAll().ToList();
+                if (notes == null)
+                {
+                    return new BaseResponse<List<Note>>()
+                    {
+                        Description = "Не найдено ни одной записи",
+                        StatusCode = StatusCode.Success
+                    };
+                }
+
+                return new BaseResponse<List<Note>>()
+                {
+                    Data = notes,
+                    StatusCode = StatusCode.Success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<List<Note>>()
+                {
+                    Description = $"{this.GetType()} : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
+        public async Task<IBaseResponse<Note>> UpdateNote(int id, NoteViewModel model)
+        {
+            try
+            {
+                var note = await _noteRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+                if (note == null)
+                {
+                    return new BaseResponse<Note>()
+                    {
+                        Description = "Запись, которую нужно обновить, не была найдена",
+                        StatusCode = StatusCode.Success
+                    };
+                }
+                note.Name = model.Name;
+                note.Description = model.Description;
+                note.Date = DateTime.Now;
+                await _noteRepository.Update(note);
+
+
+                return new BaseResponse<Note>
+                {
+                    Data = note,
+                    StatusCode=StatusCode.Success
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<Note>()
                 {
                     Description = $"{this.GetType()} : {ex.Message}",
                     StatusCode = StatusCode.InternalServerError
@@ -120,20 +152,25 @@ namespace Notes.Services.Implementation
         }
         public async Task<IBaseResponse<bool>> DeleteNote(int id)
         {
-            var baseResponse = new BaseResponse<bool>();
             try
             {
-                var note = await _noteRepository.GetById(id);
-                if(note == null)
+                var note = await _noteRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+                if (note == null)
                 {
-                    baseResponse.Data = false;
-                    baseResponse.Description = "Такой заметки не найдено";
-                    baseResponse.StatusCode= StatusCode.NotesNotFound;
-                    return baseResponse;
+                    return new BaseResponse<bool>()
+                    {
+                        Description = "",
+                        StatusCode = StatusCode.Success,
+                        Data = false
+                    };
                 }
-                baseResponse.Data = await _noteRepository.Delete(note);
-                baseResponse.StatusCode = StatusCode.Success;
-                return baseResponse;
+
+                await _noteRepository.Delete(note);
+                return new BaseResponse<bool>()
+                {
+                    Data = true,
+                    StatusCode = StatusCode.Success
+                };
             }
             catch (Exception ex)
             {
@@ -144,23 +181,27 @@ namespace Notes.Services.Implementation
                 };
             }
         }
-        public async Task<IBaseResponse<NoteViewModel>> CreateNote(NoteViewModel model)
+        public async Task<IBaseResponse<Note>> CreateNote(NoteViewModel model, byte[] images)
         {
-            var response = new BaseResponse<NoteViewModel>();
             try
             {
                 var note = new Note()
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    Date = DateTime.Now
+                    Date = DateTime.Now,
+                    //Image = model.Image
                 };
                 await _noteRepository.Create(note);
-                return response;
+                return new BaseResponse<Note>()
+                {
+                    StatusCode = StatusCode.Success,
+                    Data = note
+                };
             }
             catch (Exception ex)
             {
-                return new BaseResponse<NoteViewModel>()
+                return new BaseResponse<Note>()
                 {
                     Description = $"{this.GetType()} : {ex.Message}",
                     StatusCode = StatusCode.InternalServerError

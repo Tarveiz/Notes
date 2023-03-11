@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "UpdateNotes";
+}
+
+
+<form class="form" action="#">
+            <div class="form__input-name form__input">
+                <label for="name">Введите имя заметки</label>
+                <input type="text" id="name" name="name" placeholder="Имя заметки">
+            </div>
+            <div class="form__input-description form__input">
+                <label for="description">Опишите заметку</label>
+                <textarea name="description" id="description" cols="30" rows="10" placeholder="Описание заметки"></textarea>
+            </div>
+            <div class="form__input-image form__input">
+                <label for="image">Добавить изображение</label>
+                <input type="file" name="image" id="image">
+            </div>
+            <div class="form__buttons">
+                <button class="form__button">Удалить</button>
+                <button class="form__button">Изменить</button>
+            </div>
+        </form>

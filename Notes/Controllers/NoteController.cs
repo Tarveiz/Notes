@@ -15,14 +15,15 @@ namespace Notes.Controllers
             _noteService = noteService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetNotes()
+        public IActionResult GetNotes()
         {
-            var response = await _noteService.GetNotes();
+            var response = _noteService.GetNotes();
             if (response.StatusCode == Domain.Enum.StatusCode.Success)
             {
-                return View(response.Data.ToList());
+                return View(response.Data);
             }
-            return RedirectToAction("Error");
+            return View();
+            //"Error", $"{response.Description}"
         }
         [HttpGet]
         public async Task<IActionResult> GetNoteById(int id)
@@ -32,27 +33,29 @@ namespace Notes.Controllers
             {
                 return View(response.Data);
             }
-            return RedirectToAction("Error");
+            return View();
+            //"Error", $"{response.Description}"
         }
-        [HttpGet]
-        public async Task<IActionResult> GetNoteByName(string name)
-        {
-            var response = await _noteService.GetNote(name);
-            if (response.StatusCode == Domain.Enum.StatusCode.Success)
-            {
-                return View(response.Data);
-            }
-            return RedirectToAction("Error");
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> GetNoteByName(string name)
+        //{
+        //    var response = await _noteService.GetNote()
+        //    if (response.StatusCode == Domain.Enum.StatusCode.Success)
+        //    {
+        //        return View(response.Data);
+        //    }
+        //    return RedirectToAction("Error");
+        //} 
         [HttpGet]
         public async Task<IActionResult> DeleteNote(int id)
         {
             var response = await _noteService.DeleteNote(id);
-            if(response.StatusCode == Domain.Enum.StatusCode.Success)
+            if (response.StatusCode == Domain.Enum.StatusCode.Success)
             {
                 return RedirectToAction("GetNotes");
             }
-            return RedirectToAction("Error");
+            return View();
+            //"Error", $"{response.Description}"
         }
         [HttpGet]
         public async Task<IActionResult> UpdateNote(int id)
@@ -62,32 +65,35 @@ namespace Notes.Controllers
                 return View();
             }
             var response = await _noteService.GetNote(id);
-            if(response.StatusCode == Domain.Enum.StatusCode.Success)
+            if (response.StatusCode == Domain.Enum.StatusCode.Success)
             {
                 return View(response.Data);
             }
             return RedirectToAction("Error");
         }
-        [HttpPost]
-        public async Task<IActionResult> UpdateNote(NoteViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                if(model.Id == 0)
-                {
-                    await _noteService.CreateNote(model);
-                }
-                else
-                {
-                    await _noteService.UpdateNote(model.Id, model);
-                }
-            }
-            return RedirectToAction("GetNotes");
-        }
-
+        //[HttpPost]
+        //public async Task<IActionResult> CreateNote(NoteViewModel model)
+        //{
+        //    ModelState.Remove("Id");
+        //    ModelState.Remove("DateCreate");
+        //    if (model.Id == 0)
+        //    {
+        //        byte[] imageData;
+        //        using (var binaryReader = new BinaryReader(model.FormImage.OpenReadStream()))
+        //        {
+        //            imageData = binaryReader.ReadBytes((int)model.Image.Length);
+        //        }
+        //        await _noteService.CreateNote(model, imageData);
+        //    }
+        //    else
+        //    {
+        //        await _noteService.UpdateNote(model.Id, model);
+        //    }
+        //    return RedirectToAction("GetNotes");
+        //}
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("GetNotes");
         }
     }
 }

@@ -1,28 +1,29 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html style="font-size: 16px;" lang="ru">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>@ViewData["Title"] - Notes</title>
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/Notes.styles.css" asp-append-version="true" />
+	<link href="~/images/3299937.png" />
 	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    @*<script class="u-script" type="text/javascript" src="~/js/nicepage.js" defer=""></script>
+    <link rel="stylesheet" href="~/css/nicepage.css" media="screen">
+	<link rel="stylesheet" href="~/css/tableStyle.css" media="screen">*@
+
+	<link rel="stylesheet" href="~/css/tableView.css" media="screen"/>
+
 </head>
+
+    
 <body>
-	<div class="popup-box">
+	<div class="container">
 		@RenderBody()
-	</div>
-	<div class="wrapper">
-		<li class="add-box">
-			<div class="icon"><i class="uil uil-plus"></i></div>
-			<p>Добавить новую заметку</p>
-		</li>
 	</div>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/js/script.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

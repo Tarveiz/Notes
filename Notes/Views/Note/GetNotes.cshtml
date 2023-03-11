@@ -1,0 +1,100 @@
+﻿@model List<Notes.Domain.Entity.Note>
+
+@{
+    ViewData["Title"] = "Notes";
+}
+
+@*@if(Model.Count == 0)
+{
+    
+}
+else
+{*@
+        <div class="table">
+            <div class="table-head">
+                <div class="table-th">№</div>
+                <div class="table-th table-th-second">Имя заметки</div>
+                <div class="table-th">Описание</div>
+                <div class="table-th table-th-second">Дата создания</div>
+            </div>
+            <div class="table-body">
+                @foreach (var note in Model)
+                {
+                    <div class="table-row">
+                    <div class="table-cell"></div>
+                        <div class="table-cell">
+                            <span>@note.Name</span>
+                            <div class="buttons">
+                                <a asp-controller="Note" asp-action="UpdateNote"><img src="~/images/258332.png" /></a>
+                                <a asp-controller="Note" asp-action="DeleteNote"><img src="~/images/3299937.png" /></a>
+                            </div>
+                        </div>
+                        <div class="table-cell">@note.Description</div>
+                        <div class="table-cell">@note.Date</div>
+                </div>
+                    @*<div class="table-row table-row-second">
+                        <div class="table-cell">1</div>
+                        <div class="table-cell">
+                            <span>23fewfewiubejhwrbewiubejhwrbfeewiubejhwrbfeewiubejhwrbfeewiubejhwrbfeewiubejhwrbfeewiubejhwrbfeewiubejhwrbfeewiubejhwrbfeewiubejhwrbfefewfw</span>
+                            <div class="buttons">
+                                <button img="" href=""></button>
+                                <button img="" href=""></button>
+                            </div>
+                        </div>
+                        <div class="table-cell">3</div>
+                        <div class="table-cell">4</div>
+                    </div>*@
+                }
+                <div class="table-bottom">
+                    <div class="table-row">
+                        <div class="table-cell"><a asp-controller="Note" asp-action="CreateNote" class="table-create-button" ><img src="~/images/5379016.png" /></a></div>
+                        <div class="table-cell"></div>
+                        <div class="table-cell"></div>
+                        <div class="table-cell"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+@*}*@
+
+
+
+
+ @*<body data-home-page="Главная.html" data-home-page-title="Главная" class="u-body u-palette-1-light-2 u-xl-mode" data-lang="ru">
+<section class="u-align-center u-clearfix u-section-1" id="sec-0e71">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-table u-table-responsive u-table-1">
+          <table class="u-table-entity u-table-entity-1">
+            <colgroup>
+              <col width="4%">
+              <col width="21.4%">
+              <col width="46.6%">
+              <col width="28%">
+            </colgroup>
+            <thead class="u-gradient u-table-header u-table-header-1">
+              <tr style="height: 27px;">
+                <th class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-1">№</th>
+                <th class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-2">Имя заметки</th>
+                <th class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-3">Описание</th>
+                <th class="u-border-3 u-border-grey-50 u-table-cell u-table-cell-4">Дата создания</th>
+              </tr>
+            </thead>
+            <tbody class="u-custom-font u-palette-1-light-3 u-table-body u-text-font u-table-body-1">
+                        @foreach (var note in Model)
+                        {
+                            <tr style="height: 44px;">
+                            <td class="u-border-2 u-border-grey-75 u-table-cell">@note.Id</td>
+                            <td class="u-border-2 u-border-grey-75 u-table-cell">@note.Name</td>
+                            <td class="u-border-2 u-border-grey-75 u-table-cell"> &nbsp; <span class="u-icon u-icon-1"></span>&nbsp;@note.Description </td>
+                            <td class="u-border-2 u-border-grey-75 u-table-cell">@note.Date</td>
+                            </tr>
+                        }
+            </tbody>
+          </table>
+        </div>
+        <span class="u-file-icon u-hover-feature u-icon u-icon-2" href="http://localhost:7118/Notes/GetNotes"><img src="~/images/3299937.png" alt=""></span>
+        <span class="u-file-icon u-hover-feature u-icon u-icon-rectangle u-icon-3" data-href="Страница-1.html" data-animation-name="" data-animation-duration="0" data-animation-direction=""><img src="~/images/258332.png" alt=""></span>
+        <span class="u-file-icon u-hover-feature u-icon u-icon-4" data-href="Страница-1.html"><img src="~/images/5379016.png" alt=""></span>
+      </div>
+    </section>
+    </body>*@

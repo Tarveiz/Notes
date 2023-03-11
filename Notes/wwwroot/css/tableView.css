@@ -1,0 +1,178 @@
+﻿* {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Helvetica;
+    -webkit-font-smoothing: antialiased;
+    background: #adcce9;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    height: 100vh;
+    padding: 100px 0;
+}
+
+.table-create-button {
+    padding: 5px 5px;
+    
+}
+
+    .table-create-button img {
+        
+        width: 100%;
+        max-width: 32px;
+        height: 100%;
+        max-height: 32px;
+    }
+
+.table {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100%;
+}
+
+.table-head {
+    display: flex;
+    justify-content: stretch;
+    width: 100%;
+}
+
+.table-body {
+    overflow: auto;
+}
+
+.table-th {
+    background-color: #324960;
+    color: white;
+    padding: 5px;
+}
+
+.table-th, .table-cell {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px;
+    text-align: center;
+    width: 100%;
+    border: solid 1px black;
+}
+
+.table-row {
+    background-color: white;
+    display: flex;
+}
+
+.table-row-second .table-cell {
+    background: #f8f8f8;
+}
+
+.table-cell {
+    font-weight: 400;
+    background-color: white;
+    border: 1px solid #f8f8f8
+}
+
+    .table-cell:nth-child(2) {
+        display: flex;
+        justify-content: space-between;
+    }
+
+.table-cell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+    .table-cell span {
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        
+    }
+
+.buttons {
+    display: flex;
+    gap: 5px;
+
+}
+
+.buttons a img {
+    width: 100%;
+    max-width: 16px;
+    height: 100%;
+    max-height: 16px;
+}
+
+button {
+    cursor: pointer;
+}
+
+.table-bottom .table-cell {
+    border: none;
+    background: transparent;
+}
+
+.table-th-second {
+    background: #4FC3A1;
+}
+
+.table-th:first-child, .table-cell:first-child {
+    max-width: 70px;
+}
+
+
+
+
+
+/* СТИЛИ ДЛЯ ФАЙЛА UPDATE */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form__input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+    .form__input input, .form__input textarea {
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 18px;
+    }
+
+.form__buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form__input label, .form__button {
+    font-size: 18px;
+}
+
+.form__button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+    .form__button:hover {
+        background: #e3f0f1;
+    }

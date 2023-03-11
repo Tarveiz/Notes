@@ -4,7 +4,7 @@ using Notes.Domain.Entity;
 
 namespace Notes.DAL.Repository
 {
-    public class NoteRepository : INoteRepository
+    public class NoteRepository : IBaseRepository<Note>
     {
         private readonly AppDbContext _context;
         public NoteRepository(AppDbContext context)
@@ -15,36 +15,34 @@ namespace Notes.DAL.Repository
         {
             await _context.Notes.AddAsync(entity);
             await _context.SaveChangesAsync();
-
         }
 
-        public async Task<bool> Delete(Note entity)
+        public async Task Delete(Note entity)
         {
             _context.Notes.Remove(entity);
             await _context.SaveChangesAsync();
-            return true;
         }
 
-        public async Task<List<Note>> Get()
+        public IQueryable<Note> GetAll()
         {
-            return await _context.Notes.ToListAsync();
+            return _context.Notes;
         }
 
-        public async Task<Note> GetById(int id)
-        {
-            return await _context.Notes.FirstOrDefaultAsync(x => x.Id == id);
-        }
+        //public async Task<Note> GetById(int id)
+        //{
+        //    return await _context.Notes.FirstOrDefaultAsync(x => x.Id == id);
+        //}
 
-        public async Task<Note> GetByName(string? name)
-        {
-            return await _context.Notes.FirstOrDefaultAsync(x => x.Name == name);
-        }
+        //public async Task<Note> GetByName(string? name)
+        //{
+        //    return await _context.Notes.FirstOrDefaultAsync(x => x.Name == name);
+        //}
 
-        public async Task<bool> Update(Note entity)
+        public async Task<Note> Update(Note entity)
         {
             _context.Notes.Update(entity);
             await _context.SaveChangesAsync();
-            return true;
+            return entity;
         }
 
     }

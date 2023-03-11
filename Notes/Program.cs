@@ -4,6 +4,7 @@ using Notes.DAL.Interface;
 using Notes.DAL.Repository;
 using Notes.Services.Implementation;
 using Notes.Services.Interface;
+using Notes.Domain.Entity;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,9 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<INoteRepository, NoteRepository>();
+builder.Services.AddScoped<IBaseRepository<Note>, NoteRepository>();
 builder.Services.AddScoped<INoteService, NoteService>();
-
 var connectionString = builder.Configuration.GetConnectionString("MSSQL");
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
