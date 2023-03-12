@@ -67,7 +67,7 @@ namespace Notes.Controllers
             var response = await _noteService.GetNote(id);
             if (response.StatusCode == Domain.Enum.StatusCode.Success)
             {
-                return View(response.Data);
+                return RedirectToAction("GetNotes");
             }
             return RedirectToAction("Error");
         }
