@@ -11,6 +11,7 @@ namespace Notes.Services.Interface
         //Task<IBaseResponse<Note>> GetNote(int id);
         Task<IBaseResponse<bool>> DeleteNote(int id);
         Task<IBaseResponse<Note>> UpdateNote(int id, NoteViewModel model);
-        Task<IBaseResponse<Note>> CreateNote(NoteViewModel model, byte[] images);
+        Task<IBaseResponse<Note>> CreateNote(NoteViewModel model);
+        //, byte[] images
     }
 }

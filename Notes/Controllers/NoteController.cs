@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Notes.Domain.Interface;
+using Notes.Domain.Response;
 using Notes.Domain.ViewModel.Note;
 using Notes.Models;
 using Notes.Services.Interface;
@@ -58,7 +60,7 @@ namespace Notes.Controllers
             //"Error", $"{response.Description}"
         }
         [HttpGet]
-        public async Task<IActionResult> UpdateNote(int id)
+        public async Task<IActionResult> CreateNote(int id)
         {
             if (id == 0)
             {
@@ -67,30 +69,32 @@ namespace Notes.Controllers
             var response = await _noteService.GetNote(id);
             if (response.StatusCode == Domain.Enum.StatusCode.Success)
             {
-                return RedirectToAction("GetNotes");
+                return View(response);
             }
             return RedirectToAction("Error");
         }
-        //[HttpPost]
-        //public async Task<IActionResult> CreateNote(NoteViewModel model)
-        //{
-        //    ModelState.Remove("Id");
-        //    ModelState.Remove("DateCreate");
-        //    if (model.Id == 0)
-        //    {
-        //        byte[] imageData;
-        //        using (var binaryReader = new BinaryReader(model.FormImage.OpenReadStream()))
-        //        {
-        //            imageData = binaryReader.ReadBytes((int)model.Image.Length);
-        //        }
-        //        await _noteService.CreateNote(model, imageData);
-        //    }
-        //    else
-        //    {
-        //        await _noteService.UpdateNote(model.Id, model);
-        //    }
-        //    return RedirectToAction("GetNotes");
-        //}
+        [HttpPost]
+        public async Task<IActionResult> CreateNote(BaseResponse<NoteViewModel>  viewModel)
+        {
+            //ModelState.Remove("Id");
+            //ModelState.Remove("DateCreate");
+
+            if (viewModel.Data.Id == 0)
+            {
+                //byte[]? imageData;
+                //using (var binaryReader = new BinaryReader(model.FormImage.OpenReadStream()))
+                //{
+                //    imageData = binaryReader.ReadBytes((int)model.Image.Length);
+                //}
+                await _noteService.CreateNote(viewModel.Data);
+                //, imageData
+            }
+            else
+            {
+                await _noteService.UpdateNote(viewModel.Data.Id, viewModel.Data);
+            }
+            return RedirectToAction("GetNotes");
+        }
         public IActionResult Index()
         {
             return RedirectToAction("GetNotes");

@@ -1,0 +1,30 @@
+﻿@*@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+ 'Notes.Domain.Response.BaseResponse`1[Notes.Domain.ViewModel.Note.NoteViewModel]'
+*@
+@model Notes.Domain.Response.BaseResponse<Notes.Domain.ViewModel.Note.NoteViewModel>
+
+@{
+    ViewData["Title"] = "CreateNotes";
+}
+
+@*id="name" name="name"*@
+@*name="description" id="description"*@
+<form method="post" asp-antiforgery="true" class="form" action="#">
+            <div class="form__input-name form__input">
+                <label for="name">Введите имя заметки</label>
+                <input type="text" asp-controller ="Note" asp-action="CreateNote" asp-for="Data.Name" placeholder="Имя заметки">
+            </div>
+            <div class="form__input-description form__input">
+                <label for="description">Опишите заметку</label>
+                <textarea asp-for="Data.Description" cols="30" rows="10" placeholder="Описание заметки"></textarea>
+            </div>
+            <div class="form__input-image form__input">
+                <label for="image">Добавить изображение(не работает)</label>
+                <input type="file" name="image" id="image" accept="image/png, image/jpeg">
+            </div>
+            <div class="form__buttons">
+                <button asp-action="GetNotes" formmethod="get" class="form__button">Назад</button>
+                <input type="submit" class="form__button" value="Добавить" />
+            </div>
+        </form>

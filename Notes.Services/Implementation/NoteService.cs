@@ -6,7 +6,6 @@ using Notes.Domain.Enum;
 using Notes.Domain.Interface;
 using Notes.Domain.ViewModel.Note;
 using Microsoft.EntityFrameworkCore;
-using Notes.Domain.Entity;
 
 namespace Notes.Services.Implementation
 {
@@ -100,6 +99,24 @@ namespace Notes.Services.Implementation
                         StatusCode = StatusCode.Success
                     };
                 }
+                if(notes.Count == 0)
+                {
+                    return new BaseResponse<List<Note>>()
+                    {
+                        StatusCode = StatusCode.Success,
+                        Description = "Не найдено ни одной записи",
+                        Data = new List<Note>()
+                        {
+                            new Note()
+                            {
+                                Name = "Фантомная заметка",
+                                Description = "Заметка с текстом (по заданию)",
+                                Date = DateTime.Now
+                            }
+                        }
+                    };
+
+                }
 
                 return new BaseResponse<List<Note>>()
                 {
@@ -181,8 +198,9 @@ namespace Notes.Services.Implementation
                 };
             }
         }
-        public async Task<IBaseResponse<Note>> CreateNote(NoteViewModel model, byte[] images)
+        public async Task<IBaseResponse<Note>> CreateNote(NoteViewModel model)
         {
+            //, byte[] images
             try
             {
                 var note = new Note()

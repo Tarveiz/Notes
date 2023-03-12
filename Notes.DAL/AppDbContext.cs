@@ -13,7 +13,7 @@ namespace Notes.DAL
             
         }
 
-        public DbSet<Note> Notes { get; set; }
+        public DbSet<Note>? Notes { get; set; }
         
     }
 }
