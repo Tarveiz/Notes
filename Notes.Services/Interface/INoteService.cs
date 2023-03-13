@@ -8,7 +8,6 @@ namespace Notes.Services.Interface
     {
         IBaseResponse<List<Note>> GetNotes();
         Task<IBaseResponse<NoteViewModel>> GetNote(int id);
-        //Task<IBaseResponse<Note>> GetNote(int id);
         Task<IBaseResponse<bool>> DeleteNote(int id);
         Task<IBaseResponse<Note>> UpdateNote(int id, NoteViewModel model);
         Task<IBaseResponse<Note>> CreateNote(NoteViewModel model);

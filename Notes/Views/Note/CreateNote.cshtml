@@ -1,15 +1,8 @@
-﻿@*@page
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
- 'Notes.Domain.Response.BaseResponse`1[Notes.Domain.ViewModel.Note.NoteViewModel]'
-*@
-@model Notes.Domain.Response.BaseResponse<Notes.Domain.ViewModel.Note.NoteViewModel>
+﻿@model Notes.Domain.Response.BaseResponse<Notes.Domain.ViewModel.Note.NoteViewModel>
 
 @{
     ViewData["Title"] = "CreateNotes";
 }
-
-@*id="name" name="name"*@
-@*name="description" id="description"*@
 <form method="post" asp-antiforgery="true" class="form" action="#">
             <div class="form__input-name form__input">
                 <label for="name">Введите имя заметки</label>
