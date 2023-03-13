@@ -12,8 +12,8 @@ using Notes.DAL;
 namespace Notes.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230313080348_Initial")]
-    partial class Initial
+    [Migration("20230313084645_Mig3")]
+    partial class Mig3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

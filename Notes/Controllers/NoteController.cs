@@ -24,8 +24,7 @@ namespace Notes.Controllers
             {
                 return View(response.Data);
             }
-            return View();
-            //"Error", $"{response.Description}"
+            return View("Error: ", $"{response.Description}");
         }
         [HttpGet]
         public async Task<IActionResult> GetNoteById(int id)
@@ -35,19 +34,8 @@ namespace Notes.Controllers
             {
                 return View(response.Data);
             }
-            return View();
-            //"Error", $"{response.Description}"
+            return View("Error: ", $"{response.Description}");
         }
-        //[HttpGet]
-        //public async Task<IActionResult> GetNoteByName(string name)
-        //{
-        //    var response = await _noteService.GetNote()
-        //    if (response.StatusCode == Domain.Enum.StatusCode.Success)
-        //    {
-        //        return View(response.Data);
-        //    }
-        //    return RedirectToAction("Error");
-        //} 
         [HttpGet]
         public async Task<IActionResult> DeleteNote(int id)
         {
@@ -56,8 +44,7 @@ namespace Notes.Controllers
             {
                 return RedirectToAction("GetNotes");
             }
-            return View();
-            //"Error", $"{response.Description}"
+            return View("Error: ", $"{response.Description}");
         }
         [HttpGet]
         public async Task<IActionResult> CreateNote(int id)
@@ -71,23 +58,27 @@ namespace Notes.Controllers
             {
                 return View(response);
             }
-            return RedirectToAction("Error");
+            return View("Error: ", $"{response.Description}");
         }
         [HttpPost]
-        public async Task<IActionResult> CreateNote(BaseResponse<NoteViewModel>  viewModel)
+        public async Task<IActionResult> CreateNote(BaseResponse<NoteViewModel> viewModel)
         {
             //ModelState.Remove("Id");
             //ModelState.Remove("DateCreate");
 
             if (viewModel.Data.Id == 0)
             {
-                //byte[]? imageData;
-                //using (var binaryReader = new BinaryReader(model.FormImage.OpenReadStream()))
+                //byte[]? imageData = null;
+
+                //using (var binaryReader = new BinaryReader(viewModel.Data.FormImage.OpenReadStream()))
                 //{
-                //    imageData = binaryReader.ReadBytes((int)model.Image.Length);
+                //    imageData = binaryReader.ReadBytes((int)viewModel.Data.Image.Length);
                 //}
-                await _noteService.CreateNote(viewModel.Data);
                 //, imageData
+                await _noteService.CreateNote(viewModel.Data);
+
+
+
             }
             else
             {

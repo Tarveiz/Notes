@@ -6,6 +6,7 @@ using Notes.Domain.Enum;
 using Notes.Domain.Interface;
 using Notes.Domain.ViewModel.Note;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Notes.Services.Implementation
 {
@@ -198,9 +199,9 @@ namespace Notes.Services.Implementation
                 };
             }
         }
+        //, byte[] images
         public async Task<IBaseResponse<Note>> CreateNote(NoteViewModel model)
         {
-            //, byte[] images
             try
             {
                 var note = new Note()

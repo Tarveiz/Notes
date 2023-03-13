@@ -12,10 +12,10 @@
                 <label for="description">Опишите заметку</label>
                 <textarea asp-for="Data.Description" cols="30" rows="10" placeholder="Описание заметки"></textarea>
             </div>
-            <div class="form__input-image form__input">
+@*            <div class="form__input-image form__input">
                 <label for="image">Добавить изображение(не работает)</label>
                 <input type="file" name="image" id="image" accept="image/png, image/jpeg">
-            </div>
+            </div>*@
             <div class="form__buttons">
                 <button asp-action="GetNotes" formmethod="get" class="form__button">Назад</button>
                 <input type="submit" class="form__button" value="Добавить" />
