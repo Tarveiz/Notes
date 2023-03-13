@@ -56,17 +56,24 @@ namespace Notes.Controllers
             var response = await _noteService.GetNote(id);
             if (response.StatusCode == Domain.Enum.StatusCode.Success)
             {
-                return View(response);
+                NoteViewModel viewResponse = new NoteViewModel() 
+                {
+                    Id = response.Data.Id,
+                    Name = response.Data.Name,
+                    Description = response.Data.Description,
+                    Date = response.Data.Date,
+                };
+                return View(viewResponse);
             }
             return View("Error: ", $"{response.Description}");
         }
         [HttpPost]
-        public async Task<IActionResult> CreateNote(BaseResponse<NoteViewModel> viewModel)
+        public async Task<IActionResult> CreateNote(NoteViewModel viewModel)
         {
             //ModelState.Remove("Id");
             //ModelState.Remove("DateCreate");
 
-            if (viewModel.Data.Id == 0)
+            if (viewModel.Id == 0)
             {
                 //byte[]? imageData = null;
 
@@ -75,14 +82,14 @@ namespace Notes.Controllers
                 //    imageData = binaryReader.ReadBytes((int)viewModel.Data.Image.Length);
                 //}
                 //, imageData
-                await _noteService.CreateNote(viewModel.Data);
+                await _noteService.CreateNote(viewModel);
 
 
 
             }
             else
             {
-                await _noteService.UpdateNote(viewModel.Data.Id, viewModel.Data);
+                await _noteService.UpdateNote(viewModel.Id, viewModel);
             }
             return RedirectToAction("GetNotes");
         }

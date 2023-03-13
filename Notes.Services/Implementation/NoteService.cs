@@ -7,6 +7,7 @@ using Notes.Domain.Interface;
 using Notes.Domain.ViewModel.Note;
 using Microsoft.EntityFrameworkCore;
 using static System.Net.Mime.MediaTypeNames;
+using System.Collections.Generic;
 
 namespace Notes.Services.Implementation
 {
@@ -87,14 +88,28 @@ namespace Notes.Services.Implementation
                 };
             }
         }
-        public  IBaseResponse<List<Note>> GetNotes()
+        public  IBaseResponse<List<NoteViewModel>> GetNotes()
         {
             try
             {
                 var notes =  _noteRepository.GetAll().ToList();
+                List<NoteViewModel> noteViewModel = new List<NoteViewModel>();
+                foreach (var note in notes)
+                {
+                    noteViewModel.Add(new NoteViewModel() 
+                    {
+                        Id = note.Id,
+                        Name = note.Name,
+                        Description = note.Description,
+                        Date = note.Date
+                        //Image = note.Image
+                    });
+                }
+                
+                
                 if (notes == null)
                 {
-                    return new BaseResponse<List<Note>>()
+                    return new BaseResponse<List<NoteViewModel>>()
                     {
                         Description = "Не найдено ни одной записи",
                         StatusCode = StatusCode.Success
@@ -102,13 +117,13 @@ namespace Notes.Services.Implementation
                 }
                 if(notes.Count == 0)
                 {
-                    return new BaseResponse<List<Note>>()
+                    return new BaseResponse<List<NoteViewModel>>()
                     {
                         StatusCode = StatusCode.Success,
                         Description = "Не найдено ни одной записи",
-                        Data = new List<Note>()
+                        Data = new List<NoteViewModel>()
                         {
-                            new Note()
+                            new NoteViewModel()
                             {
                                 Name = "Фантомная заметка",
                                 Description = "Заметка с текстом (по заданию)",
@@ -119,15 +134,15 @@ namespace Notes.Services.Implementation
 
                 }
 
-                return new BaseResponse<List<Note>>()
+                return new BaseResponse<List<NoteViewModel>>()
                 {
-                    Data = notes,
+                    Data = noteViewModel,
                     StatusCode = StatusCode.Success
                 };
             }
             catch (Exception ex)
             {
-                return new BaseResponse<List<Note>>()
+                return new BaseResponse<List<NoteViewModel>>()
                 {
                     Description = $"{this.GetType()} : {ex.Message}",
                     StatusCode = StatusCode.InternalServerError

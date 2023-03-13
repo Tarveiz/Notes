@@ -6,7 +6,7 @@ namespace Notes.Services.Interface
 {
     public interface INoteService
     {
-        IBaseResponse<List<Note>> GetNotes();
+        IBaseResponse<List<NoteViewModel>> GetNotes();
         Task<IBaseResponse<NoteViewModel>> GetNote(int id);
         Task<IBaseResponse<bool>> DeleteNote(int id);
         Task<IBaseResponse<Note>> UpdateNote(int id, NoteViewModel model);

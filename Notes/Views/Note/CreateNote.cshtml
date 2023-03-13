@@ -1,4 +1,4 @@
-﻿@model Notes.Domain.Response.BaseResponse<Notes.Domain.ViewModel.Note.NoteViewModel>
+﻿@model Notes.Domain.ViewModel.Note.NoteViewModel
 
 @{
     ViewData["Title"] = "CreateNotes";
@@ -6,11 +6,11 @@
 <form method="post" asp-antiforgery="true" class="form" action="#">
             <div class="form__input-name form__input">
                 <label for="name">Введите имя заметки</label>
-                <input type="text" asp-controller ="Note" asp-action="CreateNote" asp-for="Data.Name" placeholder="Имя заметки">
+                <input type="text" asp-controller ="Note" asp-action="CreateNote" asp-for="Name" placeholder="Имя заметки">
             </div>
             <div class="form__input-description form__input">
                 <label for="description">Опишите заметку</label>
-                <textarea asp-for="Data.Description" cols="30" rows="10" placeholder="Описание заметки"></textarea>
+                <textarea asp-for="Description" cols="30" rows="10" placeholder="Описание заметки"></textarea>
             </div>
 @*            <div class="form__input-image form__input">
                 <label for="image">Добавить изображение(не работает)</label>
